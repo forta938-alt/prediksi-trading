@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Auto Entry BTCUSD H1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { background:#111; color:#fff; font-family:Arial; text-align:center; padding:20px; }
+input { padding:10px; margin:8px; width:80%; border:none; border-radius:6px; font-size:16px; }
+button { padding:12px 24px; background:#0d6efd; border:none; color:white; border-radius:6px; margin-top:10px; cursor:pointer; font-size:18px; }
+.box { background:#222; padding:15px; border-radius:8px; margin-top:18px; text-align:left; }
+</style>
+</head>
+<body>
+
+<h2>Analisis H1 BTCUSD (Akurasi Retrace)</h2>
+
+<input type="number" id="high" placeholder="Masukkan Harga Tertinggi H1">
+<input type="number" id="low" placeholder="Masukkan Harga Terendah H1">
+<button onclick="hitung()">Tentukan Open Posisi</button>
+
+<div class="box" id="hasil">Menunggu input...</div>
+
+<script>
+function hitung() {
+  let high = parseFloat(document.getElementById("high").value);
+  let low = parseFloat(document.getElementById("low").value);
+
+  if (!high || !low) {
+    document.getElementById("hasil").innerHTML = "<b>⚠️ Masukkan angka dahulu.</b>";
+    return;
+  }
+
+  let jarak = high - low;
+
+  // BUY setup
+  let buyEntry = low;
+  let buyTP = low + (jarak * 0.35);
+  let buySL = low - (jarak * 0.20);
+
+  // SELL setup
+  let sellEntry = high;
+  let sellTP = high - (jarak * 0.35);
+  let sellSL = high + (jarak * 0.20);
+
+  document.getElementById("hasil").innerHTML = `
+  <h3>📌 Pilihan Open Posisi H1</h3>
+
+  <b>BUY (untuk pantulan/naik)</b><br>
+  💰 Entry: ${buyEntry.toFixed(2)}<br>
+  🎯 TP: ${buyTP.toFixed(2)}<br>
+  🛡️ SL: ${buySL.toFixed(2)}<br><br>
+
+  <b>SELL (untuk pantulan/turun)</b><br>
+  💰 Entry: ${sellEntry.toFixed(2)}<br>
+  🎯 TP: ${sellTP.toFixed(2)}<br>
+  🛡️ SL: ${sellSL.toFixed(2)}<br><br>
+
+  <hr>
+  ✅ <b>Aturan</b><br>
+  • Jika harga saat ini berada di dekat LOW → ambil BUY.<br>
+  • Jika harga saat ini berada di dekat HIGH → ambil SELL.<br>
+  • Jangan ambil tengah-tengah.<br>
+  `;
+}
+</script>
+
+</body>
+</html>
